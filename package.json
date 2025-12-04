@@ -6,6 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "build:cf": "npx @cloudflare/next-on-pages@latest --hook next build",
+    "build:static": "next build && next export",
     "export": "next export",
     "start": "next start",
     "lint": "next lint"

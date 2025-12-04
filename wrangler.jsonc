@@ -1,0 +1,8 @@
+{
+  "name": "travel-gede-riawan",
+  "main": "worker.js",
+  "compatibility_date": "2025-12-04",
+  "assets": {
+    "directory": "./out"
+  }
+}
