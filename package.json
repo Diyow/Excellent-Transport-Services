@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npx @cloudflare/next-on-pages@latest --hook next build",
-    "build:cf": "npx @cloudflare/next-on-pages@latest --hook next build",
+    "build": "npx @cloudflare/next-on-pages@latest",
+    "build:cf": "npx @cloudflare/next-on-pages@latest",
     "export": "next export",
     "start": "next start",
     "lint": "next lint"
