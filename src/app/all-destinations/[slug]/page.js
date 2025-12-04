@@ -21,19 +21,19 @@ export default function DestinationDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-teal-100">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-teal-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
   if (!destination) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-teal-100 p-4">
-        <h1 className="text-4xl font-bold text-teal-800 mb-4">Destination Not Found</h1>
-        <p className="text-lg text-teal-600 mb-8">Sorry, we couldn&apos;t find the destination you&apos;re looking for.</p>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 p-4">
+        <h1 className="text-4xl font-bold text-slate-800 mb-4">Destination Not Found</h1>
+        <p className="text-lg text-slate-600 mb-8">Sorry, we couldn&apos;t find the destination you&apos;re looking for.</p>
         <Link href="/all-destinations">
-          <button className="bg-teal-600 text-white px-6 py-3 rounded-full font-medium hover:bg-teal-700 transition-colors duration-200">
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 transition-colors duration-200">
             Back to All Destinations
           </button>
         </Link>
@@ -42,7 +42,7 @@ export default function DestinationDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <div className="relative h-[50vh] md:h-[70vh]">
         <Image
           src={destination.image}
@@ -81,8 +81,8 @@ export default function DestinationDetail() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-16"
         >
-          <h2 className="text-3xl font-bold text-teal-800 mb-6">Overview</h2>
-          <p className="text-lg text-teal-600 leading-relaxed">
+          <h2 className="text-3xl font-bold text-slate-800 mb-6">Overview</h2>
+          <p className="text-lg text-slate-600 leading-relaxed">
             {destination.longDescription || destination.description}
           </p>
         </motion.div>
@@ -93,7 +93,7 @@ export default function DestinationDetail() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-3xl font-bold text-teal-800 mb-6">Top Attractions</h2>
+          <h2 className="text-3xl font-bold text-slate-800 mb-6">Top Attractions</h2>
           
           {destination.attractions.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -115,15 +115,15 @@ export default function DestinationDetail() {
                     />
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-teal-800 mb-2">{attraction.name}</h3>
-                    <p className="text-teal-600">{attraction.description}</p>
+                    <h3 className="text-xl font-semibold text-slate-800 mb-2">{attraction.name}</h3>
+                    <p className="text-slate-600">{attraction.description}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
           ) : (
             <div className="bg-white rounded-2xl p-8 text-center">
-              <p className="text-teal-600 text-lg">Attractions coming soon!</p>
+              <p className="text-slate-600 text-lg">Attractions coming soon!</p>
             </div>
           )}
         </motion.div>
@@ -135,11 +135,24 @@ export default function DestinationDetail() {
           transition={{ delay: 0.4 }}
           className="mt-16 bg-white rounded-2xl p-8 shadow-lg"
         >
-          <h2 className="text-2xl font-bold text-teal-800 mb-4">Location</h2>
-          <div className="relative h-96 rounded-xl overflow-hidden bg-teal-50">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-teal-600">Interactive map coming soon</p>
-            </div>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Location</h2>
+          <div className="relative h-96 rounded-xl overflow-hidden bg-slate-50">
+            {destination.mapEmbedSrc ? (
+              <iframe
+                src={destination.mapEmbedSrc}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`${destination.name} location map`}
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-slate-600">Interactive map coming soon</p>
+              </div>
+            )}
           </div>
         </motion.div>
 
@@ -150,14 +163,6 @@ export default function DestinationDetail() {
           transition={{ delay: 0.5 }}
           className="mt-12"
         >
-          <Link href="/all-destinations">
-            <button className="inline-flex items-center text-teal-600 font-medium hover:text-teal-800 transition-colors duration-200">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to All Destinations
-            </button>
-          </Link>
         </motion.div>
       </div>
     </div>

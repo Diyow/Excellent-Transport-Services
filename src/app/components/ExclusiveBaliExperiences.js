@@ -2,11 +2,13 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { highlightedActivities } from "../data/activitiesData";
+import { useCurrency, CURRENCIES } from "../context/CurrencyContext";
 
 export default function ExclusiveBaliExperiences() {
+  const { currency, convertAmount, formatCurrency } = useCurrency();
   
   return (
-    <section id="exclusive-experiences" className="py-20 bg-gradient-to-b from-white to-blue-100">
+    <section id="activities" className="py-20 bg-gradient-to-b from-white to-blue-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.h2
@@ -52,19 +54,24 @@ export default function ExclusiveBaliExperiences() {
                   Popular
                 </div>
               </Link>
-              <div className="p-6 flex-grow">
+              <div className="p-6 flex-grow flex flex-col justify-between">
                 <Link href={`/all-activities/${activity.slug}`} className="block">
                   <h3 className="text-xl font-semibold text-slate-800 mb-2 hover:text-slate-600 transition-colors duration-200">{activity.name}</h3>
                 </Link>
                 <p className="text-slate-600">{activity.description}</p>
-              </div>
-              <div className="px-6 pb-6">
-                <Link 
-                  href={`/all-activities/${activity.slug}`}
-                  className="inline-block text-blue-500 font-medium hover:text-blue-800 transition-colors duration-200"
-                >
-                  Learn more →
-                </Link>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mt-4">
+                  <span className="text-xl sm:text-2xl font-bold text-slate-700">
+                    From {formatCurrency(convertAmount(activity.price || 0, CURRENCIES.IDR, currency), currency)}
+                  </span>
+                  <span className="text-xs text-gray-500 self-end mb-1">per person</span>
+                  <Link 
+                    href={`/all-activities/${activity.slug}`} 
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors duration-200 w-full sm:w-auto text-center"
+                    aria-label={`View details for ${activity.name}`}
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Hero() {
   const handleWhatsAppClick = () => {
-    const phoneNumber = "6287741459807";
+    const phoneNumber = "62895421657803";
     const message = "Hi, I'm interested in booking a Bali tour package. Can you help me with more information?";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

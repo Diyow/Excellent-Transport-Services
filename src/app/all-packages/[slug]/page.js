@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getPackageBySlug, getRelatedPackages } from '../../data/packagesData';
 import { getTransportationByCategory, calculateAdjustedPrice } from '../../data/transportationData';
+import { useCurrency, CURRENCIES } from '../../context/CurrencyContext';
 
 export default function PackageDetail() {
   const params = useParams();
@@ -14,8 +15,9 @@ export default function PackageDetail() {
   const [relatedPackages, setRelatedPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTransportation, setSelectedTransportation] = useState('');
-  const [adjustedPrice, setAdjustedPrice] = useState('');
+  const [adjustedPrice, setAdjustedPrice] = useState(0);
   const [transportationOptions, setTransportationOptions] = useState([]);
+  const { currency, convertAmount, formatCurrency } = useCurrency();
 
   useEffect(() => {
     if (params.slug) {
@@ -24,7 +26,7 @@ export default function PackageDetail() {
       
       if (foundPackage) {
         setRelatedPackages(getRelatedPackages(params.slug));
-        setAdjustedPrice(foundPackage.price); // Initialize with base price
+        setAdjustedPrice(Number(foundPackage.basePriceIDR || 0)); // Initialize with numeric base price (IDR)
         
         // Get transportation options
         setTransportationOptions(getTransportationByCategory('all'));
@@ -37,7 +39,7 @@ export default function PackageDetail() {
   // Update price when transportation selection changes
   useEffect(() => {
     if (packageData) {
-      const newPrice = calculateAdjustedPrice(packageData.price, selectedTransportation);
+      const newPrice = calculateAdjustedPrice(Number(packageData.basePriceIDR || 0), selectedTransportation);
       setAdjustedPrice(newPrice);
     }
   }, [selectedTransportation, packageData]);
@@ -46,9 +48,13 @@ export default function PackageDetail() {
   const handleBookNow = () => {
     if (!packageData) return;
     
-    const phoneNumber = "6287741459807";
+    const phoneNumber = "62895421657803";
     const transportationInfo = selectedTransportation ? `with ${selectedTransportation} transportation` : "";
-    const message = `Hi, I'm interested in booking the ${packageData.name} package ${transportationInfo}. The total price is ${adjustedPrice}. Can you help me with more information?`;
+    const formattedTotal = formatCurrency(
+      convertAmount(Number(adjustedPrice || 0), CURRENCIES.IDR, currency),
+      currency
+    );
+    const message = `Hi, I'm interested in booking the ${packageData.name} package ${transportationInfo}. The total price is ${formattedTotal}. Can you help me with more information?`;
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -152,7 +158,12 @@ export default function PackageDetail() {
                 <svg className="w-5 h-5" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                 </svg>
-                <span>From {packageData.price} per package</span>
+                <span>
+                  From {formatCurrency(
+                    convertAmount(Number(packageData.basePriceIDR || 0), CURRENCIES.IDR, currency),
+                    currency
+                  )} per package
+                </span>
               </div>
               
               {packageData.status === 'on hold' && (
@@ -180,7 +191,7 @@ export default function PackageDetail() {
               {packageData.attractions && packageData.attractions.length > 0 && (
                 <div>
                   <h3 className="text-xl font-semibold text-slate-800 mb-3">Tour Highlights</h3>
-                  <ul className="space-y-2 text-blue-500">
+                  <ul className="space-y-2 text-slate-600">
                     {packageData.attractions.map((attraction, i) => (
                       <li key={i} className="flex items-start">
                         <span className="text-blue-400 mr-2 text-xl">•</span>
@@ -279,7 +290,12 @@ export default function PackageDetail() {
                       </div>
                       <div className="text-right">
                         {option.priceAdjustment > 0 ? (
-                          <span className="text-xs text-slate-600">+${option.priceAdjustment}</span>
+                          <span className="text-xs text-slate-600">
+                            +{formatCurrency(
+                              convertAmount(option.priceAdjustment, CURRENCIES.IDR, currency),
+                              currency
+                            )}
+                          </span>
                         ) : (
                           <span className="text-xs text-slate-600">Base price</span>
                         )}
@@ -300,7 +316,12 @@ export default function PackageDetail() {
               <div className="mb-6">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-slate-700">Price</span>
-                  <span className="text-2xl font-bold text-blue-500">{adjustedPrice}</span>
+                  <span className="text-2xl font-bold text-blue-500">
+                    {formatCurrency(
+                      convertAmount(Number(adjustedPrice || 0), CURRENCIES.IDR, currency),
+                      currency
+                    )}
+                  </span>
                 </div>
                 {selectedTransportation && (
                   <p className="text-xs text-blue-400 text-right">
@@ -335,7 +356,7 @@ export default function PackageDetail() {
                   href="#" 
                   onClick={(e) => {
                     e.preventDefault();
-                    const phoneNumber = "6287741459807";
+                    const phoneNumber = "62895421657803";
                     const message = `Hi, I have a question about the ${packageData.name} package.`;
                     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                     window.open(whatsappUrl, '_blank');
@@ -383,7 +404,12 @@ export default function PackageDetail() {
                   <div className="p-4 flex-grow flex flex-col justify-between">
                     <p className="text-slate-600 text-sm mb-4 line-clamp-2">{pkg.description}</p>
                     <div className="flex justify-between items-center mb-auto">
-                      <span className="text-lg font-bold text-blue-500">From {pkg.price}</span>
+                      <span className="text-lg font-bold text-slate-700">
+                        From {formatCurrency(
+                          convertAmount(Number(pkg.basePriceIDR || 0), CURRENCIES.IDR, currency),
+                          currency
+                        )}
+                      </span>
                       <Link 
                         href={`/all-packages/${pkg.slug}`} 
                         className="text-blue-500 hover:text-blue-800 text-sm font-medium"

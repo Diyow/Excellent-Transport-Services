@@ -7,7 +7,7 @@ export default function PopularDestinations() {
   const destinations = [
     {
       name: "Ubud",
-      image: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?auto=format&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1583248369069-9d91f1640fe6",
       description: "Cultural heart of Bali, known for its traditional arts and natural beauty.",
       highlights: [
         "Yoga class",
@@ -19,7 +19,7 @@ export default function PopularDestinations() {
     },
     {
       name: "Uluwatu",
-      image: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1588625224664-a561c1f5f619?",
       description: "Famous for its stunning cliff-top temple and world-class surf breaks.",
       highlights: [
         "Uluwatu Temple",
@@ -31,7 +31,7 @@ export default function PopularDestinations() {
     },
     {
       name: "Lahangan",
-      image: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1671811805878-a587da969fa7?",
       description: "Home to some of Bali's most iconic temples and breathtaking views.",
       highlights: [
         "Lempuyang Temple",
@@ -41,7 +41,7 @@ export default function PopularDestinations() {
     },
     {
       name: "Kintamani",
-      image: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&q=80",
+      image: "https://images.unsplash.com/photo-1623042392888-1f87e36a5b64?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Volcanic region with stunning mountain views and natural hot springs.",
       highlights: [
         "Pinggan Village",

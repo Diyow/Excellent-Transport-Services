@@ -31,7 +31,7 @@ export default function AllDestinations() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       <div className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -39,8 +39,8 @@ export default function AllDestinations() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl mt-12 font-bold text-teal-800 mb-4">Explore Bali Destinations</h1>
-          <p className="text-lg text-teal-600 max-w-3xl mx-auto">
+          <h1 className="text-5xl mt-12 font-bold text-slate-800 mb-4">Explore Bali Destinations</h1>
+          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
             Discover the beauty and diversity of Bali&apos;s most enchanting locations, from pristine beaches to cultural landmarks and natural wonders.
           </p>
         </motion.div>
@@ -55,8 +55,8 @@ export default function AllDestinations() {
               onClick={() => setActiveFilter(filter)}
               className={`px-6 py-2 rounded-full font-medium transition-colors duration-200 ${
                 activeFilter === filter
-                  ? 'bg-teal-600 text-white'
-                  : 'bg-white text-teal-600 hover:bg-teal-50'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-slate-600 hover:bg-blue-50'
               }`}
             >
               {filter.charAt(0).toUpperCase() + filter.slice(1)}
@@ -76,7 +76,7 @@ export default function AllDestinations() {
               key={destination.name}
               variants={itemVariants}
               className={`bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 ${
-                destination.category === 'highlight' ? 'ring-2 ring-teal-500' : ''
+                destination.category === 'highlight' ? 'ring-2 ring-blue-500' : ''
               }`}
             >
               <Link href={`/all-destinations/${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
@@ -92,7 +92,7 @@ export default function AllDestinations() {
                   <div className="absolute bottom-0 left-0 p-6">
                     <h3 className="text-2xl font-bold text-white mb-1">{destination.name}</h3>
                     {destination.category === 'highlight' && (
-                      <span className="inline-block bg-teal-500 text-white text-xs px-2 py-1 rounded-full">
+                      <span className="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
                         Highlight
                       </span>
                     )}
@@ -100,32 +100,32 @@ export default function AllDestinations() {
                 </div>
               </Link>
               <div className="p-6">
-                <p className="text-teal-600 mb-4">{destination.description}</p>
+                <p className="text-slate-600 mb-4">{destination.description}</p>
                 {destination.attractions.length > 0 ? (
                   <div>
-                    <h4 className="font-semibold text-teal-800 mb-2">Top Attractions:</h4>
+                    <h4 className="font-semibold text-slate-800 mb-2">Top Attractions:</h4>
                     <ul className="space-y-1">
                       {destination.attractions.slice(0, 3).map((attraction, index) => (
                         <li key={index} className="flex items-start">
                           <svg className="w-5 h-5 text-teal-500 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                           </svg>
-                          <span className="text-teal-600">{attraction.name}</span>
+                          <span className="text-slate-600">{attraction.name}</span>
                         </li>
                       ))}
                       {destination.attractions.length > 3 && (
-                        <li className="text-teal-500 font-medium mt-1">
+                        <li className="text-blue-500 font-medium mt-1">
                           +{destination.attractions.length - 3} more attractions
                         </li>
                       )}
                     </ul>
                   </div>
                 ) : (
-                  <p className="text-teal-500 italic">Coming soon...</p>
+                  <p className="text-slate-500 italic">Coming soon...</p>
                 )}
                 <Link href={`/all-destinations/${destination.name.toLowerCase().replace(/\s+/g, '-')}`}>
                   <div className="mt-6 flex justify-end">
-                    <button className="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-200 flex items-center">
+                    <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-200 flex items-center">
                       Explore More
                       <svg className="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -145,14 +145,6 @@ export default function AllDestinations() {
           transition={{ delay: 0.5 }}
           className="mt-16 text-center"
         >
-          <Link href="/">
-            <button className="inline-flex items-center text-teal-600 font-medium hover:text-teal-800 transition-colors duration-200">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Home
-            </button>
-          </Link>
         </motion.div>
       </div>
     </div>

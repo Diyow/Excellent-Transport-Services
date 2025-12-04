@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { tourPackages, getPackagesByCategory } from '../data/packagesData';
+import { useCurrency, CURRENCIES } from '../context/CurrencyContext';
 
 export default function AllPackages() {
+  const { currency, convertAmount, formatCurrency } = useCurrency();
   const [activeFilter, setActiveFilter] = useState('all');
   const [isScrolled, setIsScrolled] = useState(false);
   const [filteredPackages, setFilteredPackages] = useState(tourPackages);
@@ -131,7 +133,9 @@ export default function AllPackages() {
                 
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0 mt-auto pt-3 border-t border-gray-100">
                   <div className="flex items-center gap-2">
-                    <span className="text-xl sm:text-2xl font-bold text-blue-500">From {pkg.price}</span>
+                    <span className="text-xl sm:text-2xl font-bold text-slate-700">
+                      From {formatCurrency(convertAmount(pkg.basePriceIDR || parseInt((pkg.price||'').replace(/[^0-9]/g,''))||0, CURRENCIES.IDR, currency), currency)}
+                    </span>
                     <span className="text-xs text-gray-500 self-end mb-1">per package</span>
                   </div>
                   <Link 

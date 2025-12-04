@@ -30,7 +30,7 @@ export default function Transportation() {
             src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&q=80"
             alt="Transportation Hero"
             fill
-            className="object-cover brightness-75"
+            className="object-cover brightness-65"
             priority
           />
         </div>
@@ -63,7 +63,7 @@ export default function Transportation() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl font-bold text-teal-800 mb-4"
+              className="text-3xl font-bold text-slate-800 mb-4"
             >
               Choose Your Perfect Ride
             </motion.h2>
@@ -72,7 +72,7 @@ export default function Transportation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-teal-600 max-w-3xl mx-auto"
+              className="text-lg text-slate-600 max-w-3xl mx-auto"
             >
               We offer a variety of well-maintained vehicles to suit your needs, whether you&apos;re traveling solo, with family, or in a large group. All our vehicles come with professional drivers, air conditioning, and complimentary bottled water.
             </motion.p>
@@ -86,8 +86,8 @@ export default function Transportation() {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`px-5 py-2 rounded-full font-medium transition-colors duration-200 ${
                   selectedCategory === category.id
-                    ? "bg-teal-600 text-white"
-                    : "bg-white text-teal-600 hover:bg-teal-50"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-slate-600 hover:bg-blue-50"
                 }`}
               >
                 {category.name}
@@ -116,14 +116,14 @@ export default function Transportation() {
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold text-teal-800 mb-4">{vehicle.name}</h3>
+                  <h3 className="text-2xl font-bold text-slate-800 mb-4">{vehicle.name}</h3>
                   <ul className="space-y-2 mb-6">
                     {vehicle.specs.map((spec, i) => (
                       <li key={i} className="flex items-start">
-                        <svg className="w-5 h-5 text-teal-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-teal-700">{spec}</span>
+                        <span className="text-slate-700">{spec}</span>
                       </li>
                     ))}
                   </ul>
@@ -135,7 +135,7 @@ export default function Transportation() {
       </section>
 
       {/* Additional Information */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-teal-50">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-blue-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -143,33 +143,33 @@ export default function Transportation() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-bold text-teal-800 mb-6">Why Choose Our Transportation Service?</h2>
+              <h2 className="text-3xl font-bold text-slate-800 mb-6">Why Choose Our Transportation Service?</h2>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <svg className="w-6 h-6 text-teal-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                   <div>
-                    <h3 className="text-xl font-semibold text-teal-800 mb-1">Professional Drivers</h3>
-                    <p className="text-teal-600">Experienced, English-speaking drivers who know Bali inside out</p>
+                    <h3 className="text-xl font-semibold text-slate-800 mb-1">Professional Drivers</h3>
+                    <p className="text-slate-600">Experienced, English-speaking drivers who know Bali inside out</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <svg className="w-6 h-6 text-teal-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <h3 className="text-xl font-semibold text-teal-800 mb-1">Punctuality Guaranteed</h3>
-                    <p className="text-teal-600">We value your time and ensure on-time pickups and drop-offs</p>
+                    <h3 className="text-xl font-semibold text-slate-800 mb-1">Punctuality Guaranteed</h3>
+                    <p className="text-slate-600">We value your time and ensure on-time pickups and drop-offs</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <svg className="w-6 h-6 text-teal-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-6 h-6 text-green-600 mr-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   <div>
-                    <h3 className="text-xl font-semibold text-teal-800 mb-1">Transparent Pricing</h3>
-                    <p className="text-teal-600">No hidden fees or unexpected charges - pay what you agree to</p>
+                    <h3 className="text-xl font-semibold text-slate-800 mb-1">Transparent Pricing</h3>
+                    <p className="text-slate-600">No hidden fees or unexpected charges - pay what you agree to</p>
                   </div>
                 </li>
               </ul>
@@ -180,40 +180,40 @@ export default function Transportation() {
               viewport={{ once: true }}
               className="bg-white p-8 rounded-2xl shadow-lg"
             >
-              <h3 className="text-2xl font-bold text-teal-800 mb-6">How to Book</h3>
+              <h3 className="text-2xl font-bold text-slate-800 mb-6">How to Book</h3>
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold">1</div>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">1</div>
                   <div className="ml-4">
-                    <h4 className="text-lg font-semibold text-teal-800 mb-1">Choose Your Vehicle</h4>
-                    <p className="text-teal-600">Select the vehicle that best suits your group size and travel needs</p>
+                    <h4 className="text-lg font-semibold text-slate-800 mb-1">Choose Your Vehicle</h4>
+                    <p className="text-slate-600">Select the vehicle that best suits your group size and travel needs</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold">2</div>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">2</div>
                   <div className="ml-4">
-                    <h4 className="text-lg font-semibold text-teal-800 mb-1">Contact Us</h4>
-                    <p className="text-teal-600">Reach out via phone, email, or WhatsApp with your travel details</p>
+                    <h4 className="text-lg font-semibold text-slate-800 mb-1">Contact Us</h4>
+                    <p className="text-slate-600">Reach out via phone, email, or WhatsApp with your travel details</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold">3</div>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">3</div>
                   <div className="ml-4">
-                    <h4 className="text-lg font-semibold text-teal-800 mb-1">Confirm Your Booking</h4>
-                    <p className="text-teal-600">We&apos;ll send you a confirmation with all the details of your transportation</p>
+                    <h4 className="text-lg font-semibold text-slate-800 mb-1">Confirm Your Booking</h4>
+                    <p className="text-slate-600">We&apos;ll send you a confirmation with all the details of your transportation</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold">4</div>
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">4</div>
                   <div className="ml-4">
-                    <h4 className="text-lg font-semibold text-teal-800 mb-1">Enjoy Your Ride</h4>
-                    <p className="text-teal-600">Your driver will pick you up at the agreed time and location</p>
+                    <h4 className="text-lg font-semibold text-slate-800 mb-1">Enjoy Your Ride</h4>
+                    <p className="text-slate-600">Your driver will pick you up at the agreed time and location</p>
                   </div>
                 </div>
               </div>
               <div className="mt-6 flex justify-center space-x-4">
                 <a 
-                  href="tel:+62123456789" 
+                  href="tel:+62895421657803" 
                   className="inline-flex items-center bg-teal-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-teal-700 transition-colors duration-200"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,7 +222,7 @@ export default function Transportation() {
                   Call Us
                 </a>
                 <a 
-                  href="https://wa.me/62123456789" 
+                  href="https://wa.me/62895421657803" 
                   className="inline-flex items-center bg-green-500 text-white py-2 px-4 rounded-lg font-medium hover:bg-green-600 transition-colors duration-200"
                 >
                   <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -244,7 +244,7 @@ export default function Transportation() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl font-bold text-teal-800 mb-4"
+              className="text-3xl font-bold text-slate-800 mb-4"
             >
               Frequently Asked Questions
             </motion.h2>
@@ -253,7 +253,7 @@ export default function Transportation() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-lg text-teal-600"
+              className="text-lg text-slate-600"
             >
               Everything you need to know about our transportation services
             </motion.p>
@@ -266,8 +266,8 @@ export default function Transportation() {
               viewport={{ once: true }}
               className="bg-white rounded-xl p-6 shadow-md"
             >
-              <h3 className="text-xl font-semibold text-teal-800 mb-2">Do your rates include fuel and driver?</h3>
-              <p className="text-teal-600">Yes, all our transportation rates include a professional driver, fuel, and vehicle insurance. There are no hidden costs.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Do your rates include fuel and driver?</h3>
+              <p className="text-slate-600">Yes, all our transportation rates include a professional driver, fuel, and vehicle insurance. There are no hidden costs.</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -276,8 +276,8 @@ export default function Transportation() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-xl p-6 shadow-md"
             >
-              <h3 className="text-xl font-semibold text-teal-800 mb-2">Can I book a vehicle for multiple days?</h3>
-              <p className="text-teal-600">Absolutely! We offer special rates for multi-day bookings. Please contact us for a customized quote.</p>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">Can I book a vehicle for multiple days?</h3>
+              <p className="text-slate-600">Absolutely! We offer special rates for multi-day bookings. Please contact us for a customized quote.</p>
             </motion.div>
           </div>
         </div>

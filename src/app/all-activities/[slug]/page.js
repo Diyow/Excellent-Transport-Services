@@ -5,9 +5,11 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { getActivityBySlug, getRelatedActivities } from '../../data/activitiesData';
+import { getActivityBySlug, getRelatedActivities, getActivityBasePriceIDR } from '../../data/activitiesData';
+import { useCurrency, CURRENCIES } from '../../context/CurrencyContext';
 
 export default function ActivityDetail() {
+  const { currency, convertAmount, formatCurrency } = useCurrency();
   const [activityData, setActivityData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -30,21 +32,21 @@ export default function ActivityDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-teal-100">
-        <div className="animate-pulse text-teal-700 text-xl">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">
+        <div className="animate-pulse text-slate-700 text-xl">Loading...</div>
       </div>
     );
   }
 
   if (error || !activityData) {
     return (
-      <div className="min-h-screen py-20 bg-gradient-to-br from-blue-50 to-teal-100">
+      <div className="min-h-screen py-20 bg-gradient-to-br from-blue-50 to-blue-100">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl font-bold text-teal-800 mb-4">Activity Not Found</h1>
-          <p className="text-teal-600 mb-8">The activity you&apos;re looking for doesn&apos;t exist.</p>
+          <h1 className="text-3xl font-bold text-slate-800 mb-4">Activity Not Found</h1>
+          <p className="text-slate-600 mb-8">The activity you&apos;re looking for doesn&apos;t exist.</p>
           <Link 
             href="/all-activities"
-            className="inline-block bg-teal-600 text-white px-6 py-3 rounded-full font-medium hover:bg-teal-700 transition-colors duration-200"
+            className="inline-block bg-slate-600 text-white px-6 py-3 rounded-full font-medium hover:bg-slate-700 transition-colors duration-200"
           >
             Back to All Activities
           </Link>
@@ -54,32 +56,32 @@ export default function ActivityDetail() {
   }
 
   return (
-    <div className="min-h-screen py-12 sm:py-20 bg-gradient-to-br from-blue-50 to-teal-100">
+    <div className="min-h-screen py-12 sm:py-20 bg-gradient-to-br from-blue-50 to-blue-100">
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
         <nav className="flex" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3">
             <li className="inline-flex items-center">
-              <Link href="/" className="text-sm text-teal-700 hover:text-teal-900">
+              <Link href="/" className="text-sm text-slate-700 hover:text-slate-900">
                 Home
               </Link>
             </li>
             <li>
               <div className="flex items-center">
-                <svg className="w-3 h-3 text-teal-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <svg className="w-3 h-3 text-blue-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <Link href="/all-activities" className="text-sm text-teal-700 hover:text-teal-900 ml-1 md:ml-2">
+                <Link href="/all-activities" className="text-sm text-slate-700 hover:text-slate-900 ml-1 md:ml-2">
                   Activities
                 </Link>
               </div>
             </li>
             <li aria-current="page">
               <div className="flex items-center">
-                <svg className="w-3 h-3 text-teal-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <svg className="w-3 h-3 text-blue-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                   <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <span className="text-sm text-teal-500 ml-1 md:ml-2">{activityData.name}</span>
+                <span className="text-sm text-blue-500 ml-1 md:ml-2">{activityData.name}</span>
               </div>
             </li>
           </ol>
@@ -130,12 +132,22 @@ export default function ActivityDetail() {
                   <span>{activityData.location}</span>
                 </div>
               )}
-              {activityData.price && (
+              {activityData.price != null && (
                 <div className="flex items-center">
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  <span>{activityData.price}</span>
+                  <span>
+                    {(() => {
+                      if (typeof activityData.price === 'number') {
+                        return formatCurrency(convertAmount(activityData.price, CURRENCIES.IDR, currency), currency);
+                      }
+                      const baseIDR = getActivityBasePriceIDR(activityData);
+                      const formatted = baseIDR != null ? formatCurrency(convertAmount(baseIDR, CURRENCIES.IDR, currency), currency) : activityData.price;
+                      const note = activityData.price.replace(/IDR\s*[0-9.,]+\s*/i, '').trim();
+                      return `${formatted}${note ? ` ${note}` : ''}`;
+                    })()}
+                  </span>
                 </div>
               )}
             </motion.div>
@@ -154,16 +166,16 @@ export default function ActivityDetail() {
               transition={{ duration: 0.5 }}
               className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-8"
             >
-              <h2 className="text-2xl font-bold text-teal-800 mb-4">About This Activity</h2>
-              <p className="text-teal-700 mb-6">{activityData.longDescription || activityData.description}</p>
+              <h2 className="text-2xl font-bold text-slate-800 mb-4">About This Activity</h2>
+              <p className="text-slate-700 mb-6">{activityData.longDescription || activityData.description}</p>
               
               {activityData.highlights && activityData.highlights.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-xl font-semibold text-teal-800 mb-3">Highlights</h3>
-                  <ul className="space-y-2 text-teal-700">
+                  <h3 className="text-xl font-semibold text-slate-800 mb-3">Highlights</h3>
+                  <ul className="space-y-2 text-slate-700">
                     {activityData.highlights.map((highlight, index) => (
                       <li key={index} className="flex items-start">
-                        <span className="text-teal-500 mr-2 text-xl">•</span>
+                        <span className="text-blue-500 mr-2 text-xl">•</span>
                         <span>{highlight}</span>
                       </li>
                     ))}
@@ -178,12 +190,12 @@ export default function ActivityDetail() {
               transition={{ delay: 0.1, duration: 0.5 }}
               className="bg-white rounded-2xl shadow-lg p-6 sm:p-8"
             >
-              <h2 className="text-2xl font-bold text-teal-800 mb-4">What to Expect</h2>
+              <h2 className="text-2xl font-bold text-slate-800 mb-4">What to Expect</h2>
               
               {activityData.inclusions && activityData.inclusions.length > 0 && (
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-teal-700 mb-2">Inclusions</h3>
-                  <ul className="space-y-1 text-teal-600">
+                  <h3 className="text-lg font-semibold text-slate-700 mb-2">Inclusions</h3>
+                  <ul className="space-y-1 text-slate-600">
                     {activityData.inclusions.map((item, index) => (
                       <li key={index} className="flex items-center">
                         <svg className="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -206,37 +218,37 @@ export default function ActivityDetail() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="bg-white rounded-2xl shadow-lg p-6 sticky top-24"
             >
-              <h2 className="text-2xl font-bold text-teal-800 mb-6">Book This Activity</h2>
+              <h2 className="text-2xl font-bold text-slate-800 mb-6">Book This Activity</h2>
               
               <div className="flex justify-between items-center mb-6 pb-6 border-b border-gray-200">
-                <span className="text-teal-700">Price</span>
-                <span className="text-2xl font-bold text-teal-800">{activityData.price}</span>
+                <span className="text-slate-700">Price</span>
+                <span className="text-2xl font-bold text-slate-800">
+                  {(() => {
+                    if (typeof activityData.price === 'number') {
+                      return formatCurrency(convertAmount(activityData.price, CURRENCIES.IDR, currency), currency);
+                    }
+                    const baseIDR = getActivityBasePriceIDR(activityData);
+                    const formatted = baseIDR != null ? formatCurrency(convertAmount(baseIDR, CURRENCIES.IDR, currency), currency) : activityData.price;
+                    const note = activityData.price.replace(/IDR\s*[0-9.,]+\s*/i, '').trim();
+                    return `${formatted}${note ? ` ${note}` : ''}`;
+                  })()}
+                </span>
               </div>
               
               <Link 
-                href={`https://wa.me/6287741459807?text=Hi,%20I'm%20interested%20in%20booking%20the%20${encodeURIComponent(activityData.name)}%20activity.%20Could%20you%20provide%20more%20information?`}
+                href={`https://wa.me/62895421657803?text=Hi,%20I'm%20interested%20in%20booking%20the%20${encodeURIComponent(activityData.name)}%20activity.%20Could%20you%20provide%20more%20information?`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-teal-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-teal-700 transition-colors duration-200 mb-6"
+                className="block w-full bg-green-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 mb-6"
               >
                 Book via WhatsApp
               </Link>
               
               <div className="text-center">
-                <h3 className="text-lg font-semibold text-teal-800 mb-3">Need Help?</h3>
-                <p className="text-teal-600 text-sm mb-4">
+                <h3 className="text-lg font-semibold text-slate-800 mb-3">Need Help?</h3>
+                <p className="text-slate-600 text-sm mb-4">
                   Have questions about this activity? Contact us for more information.
                 </p>
-                
-                <Link 
-                  href="/contact"
-                  className="text-teal-600 hover:text-teal-800 text-sm flex items-center gap-1 justify-center"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                  </svg>
-                  Contact Us
-                </Link>
               </div>
             </motion.div>
           </div>
@@ -245,7 +257,7 @@ export default function ActivityDetail() {
         {/* Related Activities */}
         {relatedActivities.length > 0 && (
           <div className="mt-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-teal-800 mb-6 sm:mb-8 text-center">You Might Also Like</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-6 sm:mb-8 text-center">You Might Also Like</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedActivities.map((activity, index) => (
@@ -268,12 +280,12 @@ export default function ActivityDetail() {
                   </Link>
                   <div className="p-6 flex-grow">
                     <Link href={`/all-activities/${activity.slug}`}>
-                      <h3 className="text-lg font-semibold text-teal-800 mb-2 hover:text-teal-600 transition-colors duration-200">{activity.name}</h3>
+                      <h3 className="text-lg font-semibold text-slate-800 mb-2 hover:text-slate-600 transition-colors duration-200">{activity.name}</h3>
                     </Link>
-                    <p className="text-teal-600 text-sm mb-4 line-clamp-2">{activity.description}</p>
+                    <p className="text-slate-600 text-sm mb-4 line-clamp-2">{activity.description}</p>
                     <Link 
                       href={`/all-activities/${activity.slug}`}
-                      className="text-teal-600 hover:text-teal-800 text-sm font-medium"
+                      className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                     >
                       View details →
                     </Link>

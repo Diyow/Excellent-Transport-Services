@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
+import { useCurrency, CURRENCIES } from "../context/CurrencyContext";
 
 export default function TransferServices() {
+  const { currency, convertAmount, formatCurrency } = useCurrency();
+  const DISCOUNT_IDR = 50000; // Display-only discount applied to shown prices
   const handleWhatsAppClick = () => {
-    const phoneNumber = "6287741459807";
+    const phoneNumber = "62895421657803";
     const message =
       "Hi, I'm interested in booking a Transfer Service. Can you help me with more information?";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
@@ -13,22 +16,31 @@ export default function TransferServices() {
 
   // Airport transfer pricing data
   const transferPricing = [
-    { destination: "Nusa Dua", oneWay: 25, return: 45 },
-    { destination: "Jimbaran", oneWay: 25, return: 45 },
-    { destination: "Kuta", oneWay: 10.94, return: 35 },
-    { destination: "Seminyak", oneWay: 25, return: 45 },
-    { destination: "Sanur", oneWay: 25, return: 45 },
-    { destination: "Canggu", oneWay: 30, return: 55 },
-    { destination: "Tanah Lot", oneWay: 35, return: 65 },
-    { destination: "Ubud", oneWay: 30, return: 55 },
-    { destination: "Denpasar", oneWay: 25, return: 40 },
-    { destination: "Candi Dasa", oneWay: 45, return: 80 },
-    { destination: "Uluwatu", oneWay: 30, return: 55 },
+    { destination: "Nusa Dua", oneWay: 349000, return: 599000 },
+    { destination: "Jimbaran", oneWay: 249000, return: 399000 },
+    { destination: "Kuta", oneWay: 249000, return: 399000 },
+    { destination: "Seminyak", oneWay: 299000, return: 499000 },
+    { destination: "Sanur", oneWay: 299000, return: 499000 },
+    { destination: "Canggu", oneWay: 399000, return: 799000 },
+    { destination: "Tanah Lot", oneWay: 549000, return: 999000 },
+    { destination: "Ubud", oneWay: 549000, return: 999000 },
+    { destination: "Denpasar", oneWay: 400000, return: 640000 },
+    { destination: "Candi Dasa", oneWay: 749000, return: 1399000 },
+    { destination: "Uluwatu", oneWay: 449000, return: 799000 },
+    { destination: "Legian", oneWay: 249000, return: 399000 },
+    { destination: "Umalas", oneWay: 349000, return: 599000 },
+    { destination: "Keramas", oneWay: 499000, return: 899000 },
+    { destination: "Padangbai", oneWay: 649000, return: 1199000 },
+    { destination: "Lovina", oneWay: 849000, return: 1599900 },
+    { destination: "Pemuteran", oneWay: 999000, return: 1899000 },
+    { destination: "Gilimanuk", oneWay: 1199000, return: 2299000 }, 
+    { destination: "Tulamben", oneWay: 1199000, return: 2299900 },
+    { destination: "Amed", oneWay: 1199000, return: 2299000 },
   ];
 
   return (
     <section
-      id="transfer-services"
+      id="transfer"
       className="py-20 bg-gradient-to-b from-blue-100 to-white"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -195,7 +207,7 @@ export default function TransferServices() {
 
           {/* Hotel Transfer */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
@@ -373,10 +385,36 @@ export default function TransferServices() {
                       {item.destination}
                     </td>
                     <td className="px-6 py-4 text-slate-700">
-                      USD {item.oneWay}
+                      <div className="flex flex-col">
+                        <span className="text-sm text-gray-400 line-through">
+                          {formatCurrency(
+                            convertAmount(Number(item.oneWay || 0), CURRENCIES.IDR, currency),
+                            currency
+                          )}
+                        </span>
+                        <span className="text-lg font-bold text-green-600 inline-block px-2 py-1 rounded">
+                          {formatCurrency(
+                            convertAmount(Math.max(0, Number(item.oneWay || 0) - DISCOUNT_IDR), CURRENCIES.IDR, currency),
+                            currency
+                          )}
+                        </span>
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-slate-700">
-                      USD {item.return}
+                      <div className="flex flex-col">
+                        <span className="text-sm text-gray-400 line-through">
+                          {formatCurrency(
+                            convertAmount(Number(item.return || 0), CURRENCIES.IDR, currency),
+                            currency
+                          )}
+                        </span>
+                        <span className="text-lg font-bold text-green-600 inline-block px-2 py-1 rounded">
+                          {formatCurrency(
+                            convertAmount(Math.max(0, Number(item.return || 0) - DISCOUNT_IDR), CURRENCIES.IDR, currency),
+                            currency
+                          )}
+                        </span>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -385,12 +423,15 @@ export default function TransferServices() {
           </div>
           <div className="p-6 bg-blue-50 text-slate-700">
             <p className="text-sm">
-              * Prices are in USD and include all taxes and fees. Return
+              * Prices reflect your selected currency and include all taxes and fees. Return
               transfers include both airport pickup and drop-off.
             </p>
             <p className="text-sm mt-2">
               * For groups larger than 4 people or special requirements, please
               contact us for a custom quote.
+            </p>
+            <p className="text-sm mt-2 font-medium text-green-700">
+              * Special offer: discount applied to shown prices for limited times.
             </p>
             <p className="text-sm mt-2 font-medium">
               * Hotel-to-hotel transfer pricing is not included in this table.
