@@ -1,4 +1,4 @@
-'use client'
+// Client directive removed to allow server-side usage in generateStaticParams
 
 // Export the tour packages data to be used across components
 export const tourPackages = [

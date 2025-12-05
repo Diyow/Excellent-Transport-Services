@@ -1,4 +1,4 @@
-'use client'
+// Client directive removed to allow server-side usage in generateStaticParams
 
 // Export the activities data to be used across components
 export const activities = [
