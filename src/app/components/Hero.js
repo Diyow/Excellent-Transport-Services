@@ -19,7 +19,7 @@ export default function Hero() {
       </div>
 
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
+      {/* <div className="absolute inset-0 z-0">
         <Image
           src="/images/bali-hero.jpg"
           alt="Bali Landscape"
@@ -29,7 +29,7 @@ export default function Hero() {
           sizes="100vw"
           className="object-cover mix-blend-soft-light"
         />
-      </div>
+      </div> */}
 
       {/* Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
