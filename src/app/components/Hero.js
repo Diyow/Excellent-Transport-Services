@@ -176,11 +176,12 @@ export default function Hero() {
           </motion.div>
 
           {/* Right Column - Image Gallery */}
-          <motion.div
+          <div className="hidden lg:block relative h-[600px]">
+            <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:block relative h-[600px]"
+            className="w-full h-full"
           >
             <div className="absolute top-0 right-0 w-72 h-72">
               <Image
@@ -213,6 +214,7 @@ export default function Hero() {
               />
             </div>
           </motion.div>
+          </div>
         </div>
       </div>
 
